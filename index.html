@@ -1,0 +1,2402 @@
+<!DOCTYPE html>
+<!-- saved from url=(0018)file:///G:/10.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Sistema de Gestión Estudiantil – CPL La Vega</title>
+  <style>
+    :root{
+      --accent: #4f46e5;
+      --accent-2: #06b6d4;
+      --muted: rgba(255,255,255,0.65);
+      --danger: #ef4444;
+      --success: #10b981;
+      --radius: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      width: 100%;
+      min-height: 100vh;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(79,70,229,0.08), transparent),
+                  linear-gradient(180deg, #071133 0%, #08102a 100%);
+      background-attachment: fixed;
+      color: #e6eef8;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      padding-bottom: 80px;
+      overflow-x: hidden;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+      font-weight: bold;
+      border: 2px solid rgba(255,255,255,0.1);
+      flex-shrink: 0;
+    }
+
+    .brand-text h1 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      color: #fff;
+      margin: 0;
+    }
+
+    .brand-text p {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 4px 0 0 0;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: 700;
+      color: white;
+      font-size: 13px;
+      white-space: nowrap;
+      box-shadow: 0 8px 30px rgba(79,70,229,0.2);
+    }
+
+    .search-compact {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.04);
+      padding: 8px 12px;
+      border-radius: 999px;
+      gap: 8px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .search-compact input {
+      background: transparent;
+      border: none;
+      color: #e6eef8;
+      outline: none;
+      width: 200px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    .search-compact input::placeholder {
+      color: var(--muted);
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .nav-item {
+      padding: 10px 16px;
+      border-radius: 10px;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+      border: 1px solid transparent;
+    }
+
+    .nav-item.active {
+      background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-item:hover:not(.active) {
+      background: rgba(255,255,255,0.02);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 20px;
+      width: 100%;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+      font-size: 16px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .photo-frame {
+      width: 100%;
+      height: 380px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 10px;
+      border: 2px dashed rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .photo-frame:hover {
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      user-select: none;
+    }
+
+    .photo-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .btn {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 10px 14px;
+      border-radius: 8px;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+    }
+
+    .btn.primary {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: white;
+      border: none;
+      box-shadow: 0 4px 20px rgba(79,70,229,0.3);
+    }
+
+    .btn.primary:hover {
+      box-shadow: 0 6px 28px rgba(79,70,229,0.4);
+      transform: translateY(-1px);
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    select {
+      width: 100%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 11px 14px;
+      border-radius: 8px;
+      color: #e6eef8;
+      font-size: 14px;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(255,255,255,0.06);
+    }
+
+    input::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+
+    select option {
+      background: #0f172a;
+      color: #e6eef8;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: white;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      margin-top: 8px;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(79,70,229,0.4);
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .table {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 700px;
+      border-collapse: collapse;
+      color: #e6eef8;
+    }
+
+    th, td {
+      padding: 14px 12px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    tr:hover td {
+      background: linear-gradient(90deg, rgba(255,255,255,0.02), transparent);
+    }
+
+    .student-info {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+      flex-shrink: 0;
+    }
+
+    .sname {
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .smeta {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      border: none;
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+    }
+
+    .empty {
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    footer {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(2,6,23,0.95);
+      backdrop-filter: blur(10px);
+      padding: 12px 20px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      z-index: 100;
+    }
+
+    .foot-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 12px;
+    }
+
+    .report-section, .config-section {
+      display: none;
+    }
+
+    .section-active {
+      display: block;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, rgba(79,70,229,0.1), rgba(6,182,212,0.1));
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 32px;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .config-option {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .config-option:last-child {
+      border-bottom: none;
+    }
+
+    .config-info {
+      flex: 1;
+    }
+
+    .config-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .config-desc {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .firebase-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-left: auto;
+    }
+
+    .firebase-connected {
+      background: rgba(16,185,129,0.1);
+      color: var(--success);
+      border: 1px solid rgba(16,185,129,0.3);
+    }
+
+    .firebase-disconnected {
+      background: rgba(239,68,68,0.1);
+      color: var(--danger);
+      border: 1px solid rgba(239,68,68,0.3);
+    }
+
+    .firebase-config {
+      background: linear-gradient(135deg, rgba(255,152,0,0.1), rgba(255,193,7,0.1));
+      border: 1px solid rgba(255,193,7,0.2);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .firebase-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .firebase-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .connection-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.03);
+      font-size: 13px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--danger);
+    }
+
+    .status-dot.connected {
+      background: var(--success);
+    }
+
+    .status-dot.connecting {
+      background: #f59e0b;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .backup-progress {
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+      display: none;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius: 4px;
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+
+    .progress-text {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media print {
+      @page {
+        margin: 0.5cm;
+        size: A4 portrait;
+      }
+      
+      body {
+        background: white !important;
+        color: black !important;
+        font-family: 'Inter', 'Segoe UI', sans-serif !important;
+        font-size: 12px !important;
+        line-height: 1.4 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      
+      .wrap {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+      
+      .topbar, .nav, .btn, .submit-btn, .icon-btn, 
+      .filters, .actions, footer, .photo-frame,
+      #studentForm, #maestroTutor, .search-compact,
+      .badge, .muted, .report-section, .config-section,
+      .firebase-config, .firebase-status {
+        display: none !important;
+      }
+      
+      .grid {
+        display: block !important;
+        grid-template-columns: 1fr !important;
+        gap: 0 !important;
+      }
+      
+      .grid > div:first-child {
+        display: none !important;
+      }
+      
+      .grid > div:last-child {
+        display: block !important;
+        width: 100% !important;
+      }
+      
+      .card {
+        background: white !important;
+        color: black !important;
+        border: 2px solid #000 !important;
+        box-shadow: none !important;
+        border-radius: 8px !important;
+        margin: 0 !important;
+        padding: 20px !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      
+      .panel-title {
+        color: black !important;
+        font-size: 18px !important;
+        font-weight: 800 !important;
+        margin-bottom: 15px !important;
+        padding-bottom: 10px !important;
+        border-bottom: 3px solid #4f46e5 !important;
+        text-align: center !important;
+      }
+      
+      .print-header {
+        display: block !important;
+        text-align: center !important;
+        margin-bottom: 20px !important;
+        padding: 15px !important;
+        background: linear-gradient(135deg, #1e40af, #3b82f6) !important;
+        color: white !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+      }
+      
+      .print-title {
+        font-size: 22px !important;
+        font-weight: 800 !important;
+        margin-bottom: 8px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+      }
+      
+      .print-subtitle {
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        opacity: 0.9 !important;
+      }
+      
+      .maestro-tutor-section {
+        background: #f8fafc !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 6px !important;
+        padding: 12px !important;
+        margin: 15px 0 !important;
+        text-align: center !important;
+      }
+      
+      .maestro-tutor-label {
+        font-weight: 600 !important;
+        color: #475569 !important;
+        margin-bottom: 5px !important;
+        font-size: 12px !important;
+      }
+      
+      .maestro-tutor-name {
+        font-weight: 700 !important;
+        color: #1e293b !important;
+        font-size: 14px !important;
+        text-transform: uppercase !important;
+      }
+      
+      .table {
+        overflow: visible !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 8px !important;
+        margin-bottom: 20px !important;
+      }
+      
+      table {
+        width: 100% !important;
+        min-width: auto !important;
+        border-collapse: collapse !important;
+        border-spacing: 0 !important;
+        background: white !important;
+      }
+      
+      th {
+        background: linear-gradient(135deg, #4f46e5, #06b6d4) !important;
+        color: white !important;
+        font-weight: 700 !important;
+        font-size: 11px !important;
+        padding: 12px 8px !important;
+        border: none !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+      }
+      
+      th:first-child {
+        border-top-left-radius: 8px !important;
+      }
+      
+      th:last-child {
+        border-top-right-radius: 8px !important;
+      }
+      
+      td {
+        color: #334155 !important;
+        font-size: 11px !important;
+        padding: 10px 8px !important;
+        border-bottom: 1px solid #f1f5f9 !important;
+        background: white !important;
+      }
+      
+      tr:nth-child(even) td {
+        background-color: #f8fafc !important;
+      }
+      
+      .print-footer {
+        display: block !important;
+        margin-top: 25px !important;
+        padding: 15px !important;
+        background: #f1f5f9 !important;
+        border-radius: 8px !important;
+        border: 1px solid #e2e8f0 !important;
+      }
+      
+      .footer-info {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 15px !important;
+      }
+      
+      .footer-item {
+        text-align: center !important;
+        flex: 1 !important;
+        min-width: 120px !important;
+      }
+      
+      .footer-label {
+        font-size: 10px !important;
+        color: #64748b !important;
+        font-weight: 600 !important;
+        margin-bottom: 4px !important;
+        text-transform: uppercase !important;
+      }
+      
+      .footer-value {
+        font-size: 13px !important;
+        color: #1e293b !important;
+        font-weight: 700 !important;
+      }
+      
+      .footer-separator {
+        width: 1px !important;
+        background: #cbd5e1 !important;
+        height: 30px !important;
+      }
+      
+      .student-info {
+        align-items: center !important;
+      }
+      
+      .print-avatar {
+        width: 80px !important;
+        height: 80px !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 6px !important;
+        background: white !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 9px !important;
+        color: #64748b !important;
+        text-align: center !important;
+        padding: 5px !important;
+      }
+      
+      .print-avatar-photo {
+        width: 80px !important;
+        height: 80px !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 6px !important;
+        object-fit: cover !important;
+      }
+      
+      .sname {
+        color: #1e40af !important;
+        font-weight: 700 !important;
+        font-size: 11px !important;
+      }
+      
+      .smeta {
+        display: none !important;
+      }
+      
+      th:nth-child(5),
+      td:nth-child(5) {
+        display: none !important;
+      }
+      
+      table {
+        page-break-inside: auto !important;
+      }
+      
+      tr {
+        page-break-inside: avoid !important;
+        page-break-after: auto !important;
+      }
+      
+      thead {
+        display: table-header-group !important;
+      }
+      
+      tfoot {
+        display: table-footer-group !important;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .search-compact input {
+        width: 150px;
+      }
+
+      .firebase-fields {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .wrap {
+        padding: 12px;
+      }
+      
+      .topbar {
+        gap: 12px;
+      }
+      
+      .brand-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+      }
+      
+      .brand-text h1 {
+        font-size: 15px;
+      }
+      
+      .search-compact input {
+        width: 120px;
+      }
+      
+      .photo-frame {
+        height: 300px;
+      }
+      
+      .filters {
+        width: 100%;
+      }
+      
+      .filters select {
+        flex: 1;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .firebase-actions {
+        flex-direction: column;
+      }
+
+      .firebase-status {
+        margin-left: 0;
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-icon">CPL</div>
+        <div class="brand-text">
+          <h1>Sistema de Gestión Estudiantil</h1>
+          <p>Centro Penitenciario La Vega</p>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <div class="search-compact">
+          <span style="font-size:16px">🔍</span>
+          <input id="searchStudent" placeholder="Buscar estudiante..." style="text-transform:uppercase" autocomplete="off">
+          <button id="searchButton" class="btn">Buscar</button>
+        </div>
+        <div class="badge" id="studentCount">0 ESTUDIANTES</div>
+        <div class="firebase-status firebase-connected" id="firebaseStatus">
+          <span>🗄️ IndexedDB: Conectado</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <div class="nav-item active" data-section="gestion">👨‍🎓 Gestión Estudiantes</div>
+      <div class="nav-item" data-section="reportes">📊 Reportes</div>
+      <div class="nav-item" data-section="configuracion">⚙️ Configuración</div>
+    </div>
+
+    <div id="gestion" class="section-active">
+      <div class="grid">
+        <div>
+          <div class="card">
+            <div class="panel-title">📷 Foto del Estudiante</div>
+            <div class="photo-frame" id="photoPlaceholder">
+              <div class="photo-placeholder">
+                <div style="font-size:48px">📷</div>
+                <div>Haz clic para subir foto</div>
+              </div>
+            </div>
+
+            <input type="file" id="foto" accept="image/*" style="display:none">
+            
+            <div style="display:flex;gap:10px;margin-top:16px">
+              <button class="btn primary" id="btnUploadPhoto" style="flex:1">📤 Seleccionar Foto</button>
+              <button class="btn" id="btnResetPhoto">🗑️ Limpiar Foto</button>
+            </div>
+
+            <form id="studentForm" class="form" autocomplete="off">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div class="field">
+                  <label for="nombre">Nombre *</label>
+                  <input type="text" id="nombre" placeholder="NOMBRE" style="text-transform:uppercase" required="" autocomplete="off">
+                  <div id="nombreError" style="display:none;color:var(--danger);font-size:11px;margin-top:2px">⚠️ Campo obligatorio</div>
+                </div>
+                <div class="field">
+                  <label for="apellidos">Apellidos *</label>
+                  <input type="text" id="apellidos" placeholder="APELLIDOS" style="text-transform:uppercase" required="" autocomplete="off">
+                  <div id="apellidosError" style="display:none;color:var(--danger);font-size:11px;margin-top:2px">⚠️ Campo obligatorio</div>
+                </div>
+              </div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div class="field">
+                  <label for="cedula">Cédula</label>
+                  <input type="text" id="cedula" placeholder="000-0000000-0" autocomplete="off">
+                </div>
+                <div class="field">
+                  <label for="fechaNacimiento">Fecha Nacimiento</label>
+                  <input type="date" id="fechaNacimiento" autocomplete="off">
+                </div>
+              </div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div class="field">
+                  <label for="localizacion">Localización</label>
+                  <select id="localizacion" autocomplete="off">
+                    <option value="">Seleccionar</option>
+                    <option value="VEGA 1">VEGA 1</option>
+                    <option value="PABELLONES">PABELLONES</option>
+                  </select>
+                </div>
+                
+                <div class="field" id="ubicacionEspecificaContainer" style="display:none">
+                  <label id="ubicacionLabel">N° Ubicación</label>
+                  <select id="ubicacionEspecifica" autocomplete="off">
+                    <option value="">Seleccionar</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div class="field">
+                  <label for="gradoEscolar">Grado Escolar</label>
+                  <select id="gradoEscolar" autocomplete="off">
+                    <option value="">Seleccionar</option>
+                    <option value="PRIMER AÑO">PRIMER AÑO</option>
+                    <option value="SEGUNDO AÑO">SEGUNDO AÑO</option>
+                    <option value="TERCER AÑO">TERCER AÑO</option>
+                    <option value="CUARTO AÑO">CUARTO AÑO</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="seccion">Sección</label>
+                  <select id="seccion" autocomplete="off">
+                    <option value="">Seleccionar</option>
+                    <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="display:flex;gap:12px">
+                <button type="button" class="btn" id="printButton" style="flex:1">🖨️ Imprimir</button>
+                <button type="button" class="btn" id="btnResetForm">🔄 Limpiar Formulario</button>
+              </div>
+
+              <button class="submit-btn" type="submit">
+                <span id="submitText">➕ AGREGAR ESTUDIANTE</span>
+              </button>
+            </form>
+          </div>
+
+          <div style="height:20px"></div>
+
+          <div class="card">
+            <div class="panel-title">👨‍🏫 Maestro Tutor</div>
+            <input id="maestroTutor" placeholder="NOMBRE DEL MAESTRO TUTOR" style="width:100%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);padding:11px 14px;border-radius:8px;color:#e6eef8;font-size:14px;text-transform:uppercase;font-family:inherit" autocomplete="off">
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="toolbar">
+              <div>
+                <div class="panel-title">📋 Lista de Estudiantes</div>
+                <div class="muted">Selecciona grado y sección para filtrar</div>
+              </div>
+
+              <div class="filters">
+                <select id="filtrarGrado" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);padding:10px 14px;border-radius:8px;color:#e6eef8;font-size:14px;font-family:inherit;cursor:pointer" autocomplete="off">
+                  <option value="">TODOS LOS GRADOS</option>
+                  <option>PRIMER AÑO</option><option>SEGUNDO AÑO</option><option>TERCER AÑO</option><option>CUARTO AÑO</option>
+                </select>
+                <select id="filtrarSeccion" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);padding:10px 14px;border-radius:8px;color:#e6eef8;font-size:14px;font-family:inherit;cursor:pointer" autocomplete="off">
+                  <option value="">TODAS LAS SECCIONES</option>
+                  <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Estudiante</th>
+                    <th>Información</th>
+                    <th>Ubicación</th>
+                    <th>Grado/Sección</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="studentTableBody"><tr><td colspan="5"><div class="empty">Selecciona un grado y sección para ver estudiantes</div></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="reportes" class="report-section">
+      <div class="card">
+        <div class="panel-title">📊 Reportes Estadísticos</div>
+        
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number" id="totalStudents">0</div>
+            <div class="stat-label">Total Estudiantes</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="studentsWithPhotos">0</div>
+            <div class="stat-label">Con Fotos</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="studentsWithCedula">0</div>
+            <div class="stat-label">Con Cédula</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="storageUsage">0KB</div>
+            <div class="stat-label">Uso de Almacenamiento</div>
+          </div>
+        </div>
+
+        <div class="panel-title">📈 Distribución por Grado</div>
+        <div class="table">
+          <table>
+            <thead>
+              <tr>
+                <th>Grado</th>
+                <th>Cantidad</th>
+                <th>Porcentaje</th>
+              </tr>
+            </thead>
+            <tbody id="gradeDistribution">
+              <tr><td colspan="3"><div class="empty">No hay datos para mostrar</div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:20px">
+          <button class="btn primary" onclick="exportReport()">📥 Exportar Reporte</button>
+          <button class="btn" onclick="generateSummary()">📄 Generar Resumen</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="configuracion" class="config-section">
+      <div class="card">
+        <div class="panel-title">⚙️ Configuración del Sistema</div>
+        
+        <div class="config-option">
+          <div class="config-info">
+            <div class="config-title">Backup Completo</div>
+            <div class="config-desc">Exporta/importa estudiantes + fotos entre dispositivos</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn primary" onclick="exportFullBackup()">📤 Exportar Todo</button>
+            <button class="btn" onclick="document.getElementById('fullBackupFile').click()">📥 Importar Todo</button>
+            <input type="file" id="fullBackupFile" accept=".cplbackup,.json" style="display:none" onchange="importFullBackup(this.files[0])">
+          </div>
+        </div>
+
+        <div class="backup-progress" id="backupProgress">
+          <div class="progress-text" id="progressText">Procesando...</div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+
+        <div class="firebase-config">
+          <div class="panel-title">🔥 Firebase Configuration</div>
+          <div class="firebase-fields">
+            <div class="field">
+              <label for="firebaseApiKey">API Key</label>
+              <input type="text" id="firebaseApiKey" placeholder="Tu API Key de Firebase" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="firebaseAuthDomain">Auth Domain</label>
+              <input type="text" id="firebaseAuthDomain" placeholder="tu-proyecto.firebaseapp.com" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="firebaseProjectId">Project ID</label>
+              <input type="text" id="firebaseProjectId" placeholder="tu-proyecto-id" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="firebaseStorageBucket">Storage Bucket</label>
+              <input type="text" id="firebaseStorageBucket" placeholder="tu-proyecto.appspot.com" autocomplete="off">
+            </div>
+          </div>
+          
+          <div class="firebase-actions">
+            <button class="btn primary" onclick="saveFirebaseConfig()">💾 Guardar Configuración</button>
+            <button class="btn" onclick="testFirebaseConnection()">🔗 Probar Conexión</button>
+            <button class="btn" onclick="syncToFirebase()">🔄 Sincronizar a Firebase</button>
+            <button class="btn" onclick="syncFromFirebase()">📥 Sincronizar desde Firebase</button>
+          </div>
+          
+          <div class="connection-status">
+            <div class="status-dot" id="statusDot"></div>
+            <span id="connectionStatusText">No configurado</span>
+          </div>
+        </div>
+
+        <div class="config-option">
+          <div class="config-info">
+            <div class="config-title">Exportar Datos</div>
+            <div class="config-desc">Descarga todos los estudiantes en formato JSON</div>
+          </div>
+          <button class="btn primary" onclick="exportData()">📤 Exportar</button>
+        </div>
+
+        <div class="config-option">
+          <div class="config-info">
+            <div class="config-title">Importar Datos</div>
+            <div class="config-desc">Carga estudiantes desde un archivo JSON</div>
+          </div>
+          <input type="file" id="importFile" accept=".json" style="display:none">
+          <button class="btn" onclick="document.getElementById('importFile').click()">📥 Importar</button>
+        </div>
+
+        <div class="config-option">
+          <div class="config-info">
+            <div class="config-title">Limpiar Datos</div>
+            <div class="config-desc">Elimina todos los estudiantes del sistema</div>
+          </div>
+          <button class="btn" style="background:var(--danger)" onclick="clearAllData()">🗑️ Limpiar Todo</button>
+        </div>
+
+        <div class="config-option">
+          <div class="config-info">
+            <div class="config-title">Información del Sistema</div>
+            <div class="config-desc">Versión y detalles técnicos</div>
+          </div>
+          <button class="btn" onclick="showSystemInfo()">ℹ️ Información</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="foot-inner">
+      <div>© 2024 Sistema de Gestión Estudiantil – CPL La Vega</div>
+      <div id="storageStatus">Almacenamiento: IndexedDB • Datos seguros</div>
+    </div>
+  </footer>
+
+  <script>
+    // ===== VARIABLES GLOBALES CORREGIDAS =====
+    let students = [];
+    let currentPhotoFile = null; // SOLO para archivos nuevos (File object)
+    let currentPhotoUrl = null;  // SOLO para URLs de visualización
+    let editingStudentId = null;
+    let firebaseApp = null;
+    let firebaseConnected = false;
+    let db = null;
+
+    const $ = id => document.getElementById(id);
+
+    function initIndexedDB() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open('CPL_Student_System', 2);
+        
+        request.onerror = () => {
+          console.error('Error abriendo IndexedDB:', request.error);
+          reject(request.error);
+        };
+        
+        request.onsuccess = () => {
+          db = request.result;
+          console.log('✅ IndexedDB conectado correctamente');
+          resolve(db);
+        };
+        
+        request.onupgradeneeded = (event) => {
+          const db = event.target.result;
+          console.log('🔄 Actualizando base de datos...');
+          
+          if (!db.objectStoreNames.contains('students')) {
+            const studentStore = db.createObjectStore('students', { keyPath: 'id' });
+            studentStore.createIndex('grado', 'gradoEscolar', { unique: false });
+            studentStore.createIndex('seccion', 'seccion', { unique: false });
+            console.log('✅ Store "students" creado');
+          }
+          
+          if (!db.objectStoreNames.contains('photos')) {
+            const photoStore = db.createObjectStore('photos', { keyPath: 'studentId' });
+            console.log('✅ Store "photos" creado');
+          }
+        };
+      });
+    }
+
+    async function saveStudentToIndexedDB(student) {
+      return new Promise((resolve, reject) => {
+        const transaction = db.transaction(['students'], 'readwrite');
+        const store = transaction.objectStore('students');
+        const request = store.put(student);
+        
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    async function loadStudentsFromIndexedDB() {
+      return new Promise((resolve, reject) => {
+        const transaction = db.transaction(['students'], 'readonly');
+        const store = transaction.objectStore('students');
+        const request = store.getAll();
+        
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    async function deleteStudentFromIndexedDB(studentId) {
+      return new Promise((resolve, reject) => {
+        const transaction = db.transaction(['students'], 'readwrite');
+        const store = transaction.objectStore('students');
+        const request = store.delete(studentId);
+        
+        request.onsuccess = () => resolve();
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    async function savePhotoToIndexedDB(studentId, file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const transaction = db.transaction(['photos'], 'readwrite');
+          const store = transaction.objectStore('photos');
+          const request = store.put({
+            studentId: studentId,
+            photoData: reader.result,
+            timestamp: new Date().toISOString()
+          });
+          
+          request.onsuccess = () => resolve();
+          request.onerror = () => reject(request.error);
+        };
+        reader.readAsArrayBuffer(file);
+      });
+    }
+
+    async function loadPhotoFromIndexedDB(studentId) {
+      return new Promise((resolve, reject) => {
+        const transaction = db.transaction(['photos'], 'readonly');
+        const store = transaction.objectStore('photos');
+        const request = store.get(studentId);
+        
+        request.onsuccess = () => {
+          if (request.result && request.result.photoData) {
+            const blob = new Blob([request.result.photoData], { type: 'image/jpeg' });
+            resolve(URL.createObjectURL(blob));
+          } else {
+            resolve(null);
+          }
+        };
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    async function deletePhotoFromIndexedDB(studentId) {
+      return new Promise((resolve, reject) => {
+        const transaction = db.transaction(['photos'], 'readwrite');
+        const store = transaction.objectStore('photos');
+        const request = store.delete(studentId);
+        
+        request.onsuccess = () => resolve();
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    /**
+     * FUNCIÓN CORREGIDA: Manejar upload de foto
+     */
+    function handlePhotoUpload(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        if (!file.type.startsWith('image/')) {
+            alert('Por favor selecciona una imagen válida');
+            return;
+        }
+
+        if (file.size > 1024 * 1024) {
+            alert('La imagen es muy grande. Máximo 1MB permitido');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            currentPhotoFile = file; // Guardamos el File object
+            currentPhotoUrl = ev.target.result; // Guardamos la URL para visualización
+            $('photoPlaceholder').innerHTML = '<img src="' + currentPhotoUrl + '" alt="Foto del estudiante">';
+        };
+        reader.readAsDataURL(file);
+    }
+
+    /**
+     * FUNCIÓN CORREGIDA: Reset de solo la foto
+     */
+    function resetPhoto() {
+        currentPhotoFile = null;
+        currentPhotoUrl = null;
+        $('photoPlaceholder').innerHTML = '<div class="photo-placeholder"><div style="font-size:48px">📷</div><div>Haz clic para subir foto</div></div>';
+        $('foto').value = '';
+    }
+
+    /**
+     * FUNCIÓN CORREGIDA: Reset completo del formulario
+     */
+    function resetForm() {
+        $('studentForm').reset();
+        resetPhoto();
+        editingStudentId = null;
+        $('ubicacionEspecificaContainer').style.display = 'none';
+        $('submitText').textContent = '➕ AGREGAR ESTUDIANTE';
+        $('nombreError').style.display = 'none';
+        $('apellidosError').style.display = 'none';
+    }
+
+    async function renderStudents() {
+        const tbody = $('studentTableBody');
+        const filtroGrado = $('filtrarGrado').value;
+        const filtroSeccion = $('filtrarSeccion').value;
+
+        if (!filtroGrado && !filtroSeccion) {
+            showInitialState();
+            return;
+        }
+
+        let filtered = students.slice();
+        if (filtroGrado) filtered = filtered.filter(s => s.gradoEscolar === filtroGrado);
+        if (filtroSeccion) filtered = filtered.filter(s => s.seccion === filtroSeccion);
+
+        if (filtered.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5"><div class="empty">No hay estudiantes con los filtros seleccionados</div></td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = '';
+
+        for (const s of filtered) {
+            const tr = document.createElement('tr');
+            
+            let photoSrc = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjMzMzMzMzIi8+CjxwYXRoIGQ9Ik0zMiAyNEMyOC42ODYzIDI0IDI2IDI2LjY4NjMgMjYgMzBDMjYgMzMuMzEzNyAyOC42ODYzIDM2IDMyIDM2QzM1LjMxMzcgMzYgMzggMzMuMzEzNyAzOCAzMEMzOCAyNi42ODYzIDM1LjMxMzcgMjQgMzIgMjRaIiBmaWxsPSIjNjY2NjY2Ii8+CjxwYXRoIGQ9Ik0yMCA0NEg0NFY1MEoyMFY0NFoiIGZpbGw9IiM2NjY2NjYiLz4KPC9zdmc+';
+            
+            const fechaFormateada = s.fechaNacimiento ? formatDate(s.fechaNacimiento) : 'No especificada';
+
+            tr.innerHTML = `
+                <td>
+                    <div class="student-info">
+                        <img src="${photoSrc}" class="avatar" alt="Foto" data-student-id="${s.id}">
+                        <div>
+                            <div class="sname">${escapeHtml(s.nombre)} ${escapeHtml(s.apellidos)}</div>
+                            <div class="smeta">${s.cedula}</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <strong>${escapeHtml(s.cedula)}</strong>
+                        <div class="smeta">${fechaFormateada}</div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <strong>${escapeHtml(s.localizacion)}</strong>
+                        <div class="smeta">${escapeHtml(s.numeroUbicacion)}</div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <strong>${escapeHtml(s.gradoEscolar)}</strong>
+                        <div class="smeta">Sección: ${escapeHtml(s.seccion)}</div>
+                    </div>
+                </td>
+                <td>
+                    <div class="actions">
+                        <button class="icon-btn" title="Editar" onclick="editStudent('${s.id}')">✏️</button>
+                        <button class="icon-btn" title="Eliminar" onclick="deleteStudent('${s.id}')">🗑️</button>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(tr);
+
+            loadAndUpdatePhoto(s.id);
+        }
+    }
+
+    async function loadAndUpdatePhoto(studentId) {
+        try {
+            const photoUrl = await loadPhotoFromIndexedDB(studentId);
+            if (photoUrl) {
+                const imgElement = document.querySelector(`.avatar[data-student-id="${studentId}"]`);
+                if (imgElement) {
+                    imgElement.src = photoUrl;
+                }
+            }
+        } catch (error) {
+            console.error('Error loading photo for student:', studentId, error);
+        }
+    }
+
+    async function loadStudents() {
+        try {
+            if (!db) await initIndexedDB();
+            
+            students = await loadStudentsFromIndexedDB();
+            updateCounter();
+            refreshAfterLoad();
+            
+        } catch (e) {
+            console.error('Error loading students:', e);
+            students = [];
+            updateCounter();
+            showInitialState();
+        }
+    }
+
+    /**
+     * FUNCIÓN CORREGIDA: Guardar datos del estudiante
+     */
+    async function saveStudentData() {
+        const nombre = $('nombre').value.trim().toUpperCase();
+        const apellidos = $('apellidos').value.trim().toUpperCase();
+        const cedula = $('cedula').value.trim().toUpperCase();
+
+        $('nombreError').style.display = 'none';
+        $('apellidosError').style.display = 'none';
+
+        if (!nombre || !apellidos) {
+            if (!nombre) $('nombreError').style.display = 'block';
+            if (!apellidos) $('apellidosError').style.display = 'block';
+            return;
+        }
+
+        const localizacion = $('localizacion').value;
+        let numeroUbicacion = '';
+
+        if (localizacion === 'PABELLONES' || localizacion === 'VEGA 1') {
+            numeroUbicacion = $('ubicacionEspecifica').value || 'NO ESPECIFICADO';
+        }
+
+        const student = {
+            id: editingStudentId || 'STD' + Date.now(),
+            nombre,
+            apellidos,
+            cedula: cedula || 'NO ESPECIFICADA',
+            fechaNacimiento: $('fechaNacimiento').value || '',
+            localizacion: localizacion || 'NO ESPECIFICADA',
+            numeroUbicacion: numeroUbicacion,
+            gradoEscolar: $('gradoEscolar').value || 'NO ESPECIFICADO',
+            seccion: $('seccion').value || 'NO ESPECIFICADA',
+            fechaRegistro: new Date().toISOString()
+        };
+
+        try {
+            await saveStudentToIndexedDB(student);
+
+            // SOLO guardar foto si hay un archivo nuevo (currentPhotoFile)
+            if (currentPhotoFile) {
+                await savePhotoToIndexedDB(student.id, currentPhotoFile);
+            }
+
+            alert(editingStudentId ? 'Estudiante actualizado correctamente' : 'Estudiante agregado correctamente');
+            await loadStudents();
+            resetForm();
+            
+        } catch (error) {
+            console.error('Error completo:', error);
+            alert('Error al guardar: ' + error.message);
+        }
+    }
+
+    /**
+     * FUNCIÓN CORREGIDA: Editar estudiante
+     */
+    async function editStudent(id) {
+        const s = students.find(x => x.id === id);
+        if (!s) return;
+
+        editingStudentId = id;
+        $('nombre').value = s.nombre;
+        $('apellidos').value = s.apellidos;
+        $('cedula').value = s.cedula === 'NO ESPECIFICADA' ? '' : s.cedula;
+        $('fechaNacimiento').value = s.fechaNacimiento || '';
+        $('localizacion').value = s.localizacion === 'NO ESPECIFICADA' ? '' : s.localizacion;
+
+        const event = new Event('change');
+        $('localizacion').dispatchEvent(event);
+        
+        setTimeout(() => {
+            if (s.localizacion === 'PABELLONES' || s.localizacion === 'VEGA 1') {
+                $('ubicacionEspecifica').value = s.numeroUbicacion;
+            }
+        }, 10);
+
+        $('gradoEscolar').value = s.gradoEscolar === 'NO ESPECIFICADO' ? '' : s.gradoEscolar;
+        $('seccion').value = s.seccion === 'NO ESPECIFICADA' ? '' : s.seccion;
+
+        // RESETEAMOS LAS VARIABLES DE FOTO
+        currentPhotoFile = null;
+        currentPhotoUrl = null;
+
+        try {
+            const photoUrl = await loadPhotoFromIndexedDB(id);
+            if (photoUrl) {
+                currentPhotoUrl = photoUrl; // Solo URL para visualización
+                $('photoPlaceholder').innerHTML = '<img src="' + photoUrl + '" alt="Foto del estudiante">';
+            } else {
+                $('photoPlaceholder').innerHTML = '<div class="photo-placeholder"><div style="font-size:48px">📷</div><div>Haz clic para subir foto</div></div>';
+            }
+        } catch (error) {
+            console.error('Error loading photo:', error);
+            $('photoPlaceholder').innerHTML = '<div class="photo-placeholder"><div style="font-size:48px">📷</div><div>Haz clic para subir foto</div></div>';
+        }
+
+        $('submitText').textContent = '💾 ACTUALIZAR ESTUDIANTE';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function deleteStudent(id) {
+        if (!confirm('¿Estás seguro de eliminar este estudiante?')) return;
+
+        try {
+            await deleteStudentFromIndexedDB(id);
+            await deletePhotoFromIndexedDB(id);
+            
+            students = students.filter(s => s.id !== id);
+            alert('Estudiante eliminado correctamente');
+            await loadStudents();
+            
+        } catch (error) {
+            alert('Error al eliminar estudiante: ' + error.message);
+        }
+    }
+
+    function updateCounter() {
+        $('studentCount').textContent = students.length + ' ESTUDIANTE' + (students.length !== 1 ? 'S' : '');
+    }
+
+    function showInitialState() {
+        const tbody = $('studentTableBody');
+        tbody.innerHTML = '<tr><td colspan="5"><div class="empty">Selecciona un grado y sección para ver estudiantes</div></td></tr>';
+    }
+
+    function formatDate(iso) {
+        const d = new Date(iso);
+        const dd = String(d.getDate()).padStart(2, '0');
+        const mm = String(d.getMonth() + 1).padStart(2, '0');
+        const yyyy = d.getFullYear();
+        return `${dd}/${mm}/${yyyy}`;
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    function setupLocationSelectors() {
+        $('localizacion').addEventListener('change', function () {
+            const ubicacionContainer = $('ubicacionEspecificaContainer');
+            const ubicacionSelect = $('ubicacionEspecifica');
+            const ubicacionLabel = $('ubicacionLabel');
+            
+            if (this.value === 'PABELLONES') {
+                ubicacionContainer.style.display = 'block';
+                ubicacionLabel.textContent = 'N° Pabellón';
+                ubicacionSelect.innerHTML = '<option value="">Seleccionar</option>';
+                for (let i = 1; i <= 10; i++) {
+                    ubicacionSelect.innerHTML += `<option value="PABELLÓN ${i}">PABELLÓN ${i}</option>`;
+                }
+            } else if (this.value === 'VEGA 1') {
+                ubicacionContainer.style.display = 'block';
+                ubicacionLabel.textContent = 'N° Celda';
+                ubicacionSelect.innerHTML = '<option value="">Seleccionar</option>';
+                for (let i = 1; i <= 10; i++) {
+                    ubicacionSelect.innerHTML += `<option value="CELDA ${i}">CELDA ${i}</option>`;
+                }
+            } else {
+                ubicacionContainer.style.display = 'none';
+                ubicacionSelect.innerHTML = '<option value="">Seleccionar</option>';
+            }
+        });
+    }
+
+    function refreshAfterLoad() {
+        const g = $('filtrarGrado').value;
+        const s = $('filtrarSeccion').value;
+        if (g || s) {
+            renderStudents();
+        } else {
+            showInitialState();
+        }
+    }
+
+    function setupNavigation() {
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+                
+                document.querySelectorAll('[id="gestion"], .report-section, .config-section').forEach(section => {
+                    section.classList.remove('section-active');
+                });
+                
+                const section = this.getAttribute('data-section');
+                $(section).classList.add('section-active');
+                
+                if (section === 'reportes') {
+                    updateReports();
+                }
+            });
+        });
+    }
+
+    // NUEVA FUNCIÓN: Contar estudiantes con fotos
+    async function countStudentsWithPhotos() {
+        return new Promise((resolve, reject) => {
+            if (!db) {
+                resolve(0);
+                return;
+            }
+            
+            const transaction = db.transaction(['photos'], 'readonly');
+            const store = transaction.objectStore('photos');
+            const request = store.getAllKeys();
+            
+            request.onsuccess = () => {
+                resolve(request.result.length);
+            };
+            
+            request.onerror = () => {
+                reject(request.error);
+            };
+        });
+    }
+
+    // FUNCIÓN MEJORADA: Actualizar reportes con conteo de fotos
+    async function updateReports() {
+        $('totalStudents').textContent = students.length;
+        
+        const studentsWithCedula = students.filter(s => s.cedula && s.cedula !== 'NO ESPECIFICADA').length;
+        $('studentsWithCedula').textContent = studentsWithCedula;
+        
+        // CONTAR ESTUDIANTES CON FOTOS - CORREGIDO
+        try {
+            const studentsWithPhotos = await countStudentsWithPhotos();
+            $('studentsWithPhotos').textContent = studentsWithPhotos;
+        } catch (error) {
+            console.error('Error contando fotos:', error);
+            $('studentsWithPhotos').textContent = '0';
+        }
+        
+        const estimatedSize = students.length * 2000;
+        $('storageUsage').textContent = Math.round(estimatedSize / 1024) + 'KB';
+        
+        updateGradeDistribution();
+    }
+
+    function updateGradeDistribution() {
+        const distribution = {};
+        students.forEach(s => {
+            const grado = s.gradoEscolar || 'NO ESPECIFICADO';
+            distribution[grado] = (distribution[grado] || 0) + 1;
+        });
+        
+        const tbody = $('gradeDistribution');
+        tbody.innerHTML = '';
+        
+        if (students.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3"><div class="empty">No hay datos para mostrar</div></td></tr>';
+            return;
+        }
+        
+        Object.entries(distribution).forEach(([grado, cantidad]) => {
+            const porcentaje = ((cantidad / students.length) * 100).toFixed(1);
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${grado}</td>
+                <td>${cantidad}</td>
+                <td>${porcentaje}%</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+        await loadStudents();
+        setupControls();
+        setupLocationSelectors();
+        setupNavigation();
+        
+        $('#firebaseStatus').innerHTML = '<span>🗄️ IndexedDB: Conectado</span>';
+        $('#storageStatus').textContent = 'Almacenamiento: IndexedDB • Datos seguros';
+    });
+
+    function setupControls() {
+        $('btnUploadPhoto').addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            $('foto').click();
+        });
+
+        $('photoPlaceholder').addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            $('foto').click();
+        });
+
+        $('foto').addEventListener('change', handlePhotoUpload);
+
+        $('studentForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            saveStudentData();
+        });
+        
+        // BOTONES CORREGIDOS
+        $('btnResetPhoto').addEventListener('click', (e) => {
+            e.preventDefault();
+            resetPhoto(); // Solo resetea la foto
+        });
+        
+        $('btnResetForm').addEventListener('click', (e) => {
+            e.preventDefault();
+            resetForm(); // Resetea todo el formulario
+        });
+        
+        $('searchButton').addEventListener('click', performSearch);
+        $('searchStudent').addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') performSearch();
+        });
+        $('filtrarGrado').addEventListener('change', renderStudents);
+        $('filtrarSeccion').addEventListener('change', renderStudents);
+        $('printButton').addEventListener('click', printData);
+    }
+
+    function performSearch() {
+        const term = $('searchStudent').value.toLowerCase().trim();
+        if (!term) {
+            refreshAfterLoad();
+            return;
+        }
+
+        const filtered = students.filter(s =>
+            s.nombre.toLowerCase().includes(term) ||
+            s.apellidos.toLowerCase().includes(term) ||
+            s.cedula.toLowerCase().includes(term)
+        );
+
+        const tbody = $('studentTableBody');
+        if (filtered.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5"><div class="empty">No se encontraron resultados para tu búsqueda</div></td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = '';
+
+        filtered.forEach(async s => {
+            const tr = document.createElement('tr');
+            
+            let photoSrc = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjMzMzMzMzIi8+CjxwYXRoIGQ9Ik0zMiAyNEMyOC42ODYzIDI0IDI2IDI2LjY4NjMgMjYgMzBDMjYgMzMuMzEzNyAyOC42ODYzIDM2IDMyIDM2QzM1LjMxMzcgMzYgMzggMzMuMzEzNyAzOCAzMEMzOCAyNi42ODYzIDM1LjM1MzcgMjQgMzIgMjRaIiBmaWxsPSIjNjY2NjY2Ii8+CjxwYXRoIGQ9Ik0yMCA0NEg0NFY1MEoyMFY0NFoiIGZpbGw9IiM2NjY2NjYiLz4KPC9zdmc+';
+            
+            const fechaFormateada = s.fechaNacimiento ? formatDate(s.fechaNacimiento) : 'No especificada';
+
+            tr.innerHTML = `
+                <td>
+                    <div class="student-info">
+                        <img src="${photoSrc}" class="avatar" alt="Foto" data-student-id="${s.id}">
+                        <div>
+                            <div class="sname">${escapeHtml(s.nombre)} ${escapeHtml(s.apellidos)}</div>
+                            <div class="smeta">${s.cedula}</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <strong>${escapeHtml(s.cedula)}</strong>
+                        <div class="smeta">${fechaFormateada}</div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <strong>${escapeHtml(s.localizacion)}</strong>
+                        <div class="smeta">${escapeHtml(s.numeroUbicacion)}</div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <strong>${escapeHtml(s.gradoEscolar)}</strong>
+                        <div class="smeta">Sección: ${escapeHtml(s.seccion)}</div>
+                    </div>
+                </td>
+                <td>
+                    <div class="actions">
+                        <button class="icon-btn" title="Editar" onclick="editStudent('${s.id}')">✏️</button>
+                        <button class="icon-btn" title="Eliminar" onclick="deleteStudent('${s.id}')">🗑️</button>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(tr);
+
+            loadAndUpdatePhoto(s.id);
+        });
+    }
+
+    // ===== FUNCIONES DE IMPRESIÓN Y BACKUP (sin cambios) =====
+
+    async function printData() {
+        if (students.length === 0) {
+            alert('No hay estudiantes para imprimir');
+            return;
+        }
+        
+        const maestroTutor = $('maestroTutor').value.trim().toUpperCase();
+        const filtroGrado = $('filtrarGrado').value;
+        const filtroSeccion = $('filtrarSeccion').value;
+        const originalTableHTML = $('studentTableBody').innerHTML;
+        
+        $('studentTableBody').innerHTML = '<tr><td colspan="5"><div class="empty">🔄 Preparando impresión... Cargando fotos (0/' + students.length + ')</div></td></tr>';
+        
+        const printTableBody = document.createElement('tbody');
+        
+        const headerRow = document.createElement('tr');
+        headerRow.innerHTML = `
+            <td colspan="4">
+                <div class="print-header">
+                    <div class="print-title">LISTA DE ESTUDIANTES - CPL LA VEGA</div>
+                    <div class="print-subtitle">Sistema de Gestión Estudiantil</div>
+                </div>
+            </td>
+        `;
+        printTableBody.appendChild(headerRow);
+        
+        if (maestroTutor) {
+            const tutorRow = document.createElement('tr');
+            tutorRow.innerHTML = `
+                <td colspan="4">
+                    <div class="maestro-tutor-section">
+                        <div class="maestro-tutor-label">MAESTRO TUTOR</div>
+                        <div class="maestro-tutor-name">${escapeHtml(maestroTutor)}</div>
+                    </div>
+                </td>
+            `;
+            printTableBody.appendChild(tutorRow);
+        }
+        
+        const tableHeaderRow = document.createElement('tr');
+        tableHeaderRow.innerHTML = `
+            <th>ESTUDIANTE</th>
+            <th>INFORMACIÓN</th>
+            <th>UBICACIÓN</th>
+            <th>GRADO/SECCIÓN</th>
+        `;
+        printTableBody.appendChild(tableHeaderRow);
+        
+        const currentStudents = students.filter(s => {
+            if (filtroGrado && s.gradoEscolar !== filtroGrado) return false;
+            if (filtroSeccion && s.seccion !== filtroSeccion) return false;
+            return true;
+        });
+        
+        let processedCount = 0;
+        const totalStudents = currentStudents.length;
+        
+        for (const student of currentStudents) {
+            processedCount++;
+            
+            $('studentTableBody').innerHTML = `<tr><td colspan="5"><div class="empty">🔄 Preparando impresión... Cargando fotos (${processedCount}/${totalStudents})</div></td></tr>`;
+            
+            const fechaFormateada = student.fechaNacimiento ? formatDate(student.fechaNacimiento) : 'No especificada';
+            
+            let photoHTML = '<div class="print-avatar">SIN FOTO</div>';
+            
+            try {
+                const photoUrl = await loadPhotoFromIndexedDB(student.id);
+                if (photoUrl) {
+                    photoHTML = `<img src="${photoUrl}" class="print-avatar-photo" alt="Foto de ${escapeHtml(student.nombre)}">`;
+                }
+            } catch (error) {
+                console.error('Error cargando foto para impresión:', error);
+            }
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>
+                    <div class="student-info" style="align-items: center !important;">
+                        ${photoHTML}
+                        <div>
+                            <div class="sname">${escapeHtml(student.nombre)} ${escapeHtml(student.apellidos)}</div>
+                            <div style="color: #64748b !important; font-size: 9px !important;">${student.cedula}</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <strong style="color: #334155 !important; font-size: 10px !important;">${escapeHtml(student.cedula)}</strong>
+                        <div style="color: #64748b !important; font-size: 9px !important;">${fechaFormateada}</div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <strong style="color: #334155 !important; font-size: 10px !important;">${escapeHtml(student.localizacion)}</strong>
+                        <div style="color: #64748b !important; font-size: 9px !important;">${escapeHtml(student.numeroUbicacion)}</div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <strong style="color: #334155 !important; font-size: 10px !important;">${escapeHtml(student.gradoEscolar)}</strong>
+                        <div style="color: #64748b !important; font-size: 9px !important;">Sección: ${escapeHtml(student.seccion)}</div>
+                    </div>
+                </td>
+            `;
+            printTableBody.appendChild(row);
+            
+            await new Promise(resolve => setTimeout(resolve, 50));
+        }
+        
+        const footerRow = document.createElement('tr');
+        footerRow.innerHTML = `
+            <td colspan="4">
+                <div class="print-footer">
+                    <div class="footer-info">
+                        <div class="footer-item">
+                            <div class="footer-label">Total Estudiantes</div>
+                            <div class="footer-value">${currentStudents.length}</div>
+                        </div>
+                        <div class="footer-separator"></div>
+                        <div class="footer-item">
+                            <div class="footer-label">Grado</div>
+                            <div class="footer-value">${filtroGrado || 'Todos'}</div>
+                        </div>
+                        <div class="footer-separator"></div>
+                        <div class="footer-item">
+                            <div class="footer-label">Sección</div>
+                            <div class="footer-value">${filtroSeccion || 'Todas'}</div>
+                        </div>
+                        <div class="footer-separator"></div>
+                        <div class="footer-item">
+                            <div class="footer-label">Fecha</div>
+                            <div class="footer-value">${new Date().toLocaleDateString()}</div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        `;
+        printTableBody.appendChild(footerRow);
+        
+        $('studentTableBody').innerHTML = printTableBody.innerHTML;
+        
+        const printStyles = document.createElement('style');
+        printStyles.innerHTML = `
+            @media print {
+                .print-avatar {
+                    width: 80px !important;
+                    height: 80px !important;
+                    border: 1px solid #cbd5e1 !important;
+                    border-radius: 6px !important;
+                    background: white !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    font-size: 9px !important;
+                    color: #64748b !important;
+                    text-align: center !important;
+                }
+                .print-avatar-photo {
+                    width: 80px !important;
+                    height: 80px !important;
+                    border: 1px solid #cbd5e1 !important;
+                    border-radius: 6px !important;
+                    object-fit: cover !important;
+                }
+            }
+        `;
+        document.head.appendChild(printStyles);
+        
+        window.print();
+        
+        $('studentTableBody').innerHTML = originalTableHTML;
+        document.head.removeChild(printStyles);
+    }
+
+    function exportData() {
+        const exportData = {
+            version: '1.0',
+            exportDate: new Date().toISOString(),
+            students: students,
+            metadata: {
+                totalStudents: students.length
+            }
+        };
+        
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `backup_estudiantes_${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    async function exportFullBackup() {
+        try {
+            const progress = $('backupProgress');
+            const progressFill = $('progressFill');
+            const progressText = $('progressText');
+            
+            progress.style.display = 'block';
+            progressText.textContent = 'Preparando backup...';
+            progressFill.style.width = '0%';
+
+            const allStudents = await loadStudentsFromIndexedDB();
+            progressFill.style.width = '25%';
+            progressText.textContent = `Obteniendo ${allStudents.length} estudiantes...`;
+
+            const photosData = {};
+            let photoCount = 0;
+            
+            const photoTransaction = db.transaction(['photos'], 'readonly');
+            const photoStore = photoTransaction.objectStore('photos');
+            const photoRequest = photoStore.getAll();
+            
+            await new Promise((resolve, reject) => {
+                photoRequest.onsuccess = async () => {
+                    try {
+                        const photos = photoRequest.result;
+                        
+                        for (let i = 0; i < photos.length; i++) {
+                            const photo = photos[i];
+                            
+                            const uint8Array = new Uint8Array(photo.photoData);
+                            let binary = '';
+                            const chunkSize = 8192;
+                            
+                            for (let j = 0; j < uint8Array.length; j += chunkSize) {
+                                const chunk = uint8Array.subarray(j, j + chunkSize);
+                                binary += String.fromCharCode.apply(null, chunk);
+                            }
+                            
+                            photosData[photo.studentId] = btoa(binary);
+                            photoCount++;
+                            
+                            if (photoCount % 10 === 0) {
+                                const progressPercent = 25 + (photoCount / photos.length * 25);
+                                progressFill.style.width = `${progressPercent}%`;
+                                progressText.textContent = `Procesando ${photoCount}/${photos.length} fotos...`;
+                                await new Promise(resolve => setTimeout(resolve, 10));
+                            }
+                        }
+                        
+                        resolve();
+                    } catch (error) {
+                        reject(error);
+                    }
+                };
+                
+                photoRequest.onerror = () => {
+                    reject(photoRequest.error);
+                };
+            });
+
+            progressFill.style.width = '50%';
+            progressText.textContent = `Procesadas ${photoCount} fotos...`;
+
+            const backupData = {
+                version: '2.0',
+                exportDate: new Date().toISOString(),
+                students: allStudents,
+                photos: photosData,
+                metadata: {
+                    totalStudents: allStudents.length,
+                    totalPhotos: photoCount,
+                    system: 'CPL La Vega - Gestión Estudiantil'
+                }
+            };
+
+            progressFill.style.width = '75%';
+            progressText.textContent = 'Generando archivo...';
+
+            const blob = new Blob([JSON.stringify(backupData, null, 2)], { 
+                type: 'application/json' 
+            });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `backup_completo_cpl_${new Date().toISOString().split('T')[0]}.cplbackup`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            progressFill.style.width = '100%';
+            progressText.textContent = `✅ Backup completado: ${allStudents.length} estudiantes, ${photoCount} fotos`;
+            
+            setTimeout(() => {
+                progress.style.display = 'none';
+            }, 3000);
+
+        } catch (error) {
+            console.error('Error en backup:', error);
+            alert('Error al crear el backup: ' + error.message);
+            $('backupProgress').style.display = 'none';
+        }
+    }
+
+    async function importFullBackup(file) {
+        if (!file) return;
+        
+        if (!confirm('¿Importar backup completo? Esto reemplazará todos los datos actuales.')) {
+            return;
+        }
+
+        try {
+            const progress = $('backupProgress');
+            const progressFill = $('progressFill');
+            const progressText = $('progressText');
+            
+            progress.style.display = 'block';
+            progressText.textContent = 'Leyendo archivo...';
+            progressFill.style.width = '10%';
+
+            const fileText = await file.text();
+            const backupData = JSON.parse(fileText);
+            
+            progressFill.style.width = '30%';
+            progressText.textContent = 'Validando datos...';
+
+            if (!backupData.students || !Array.isArray(backupData.students)) {
+                throw new Error('Formato de backup inválido');
+            }
+
+            const studentTransaction = db.transaction(['students'], 'readwrite');
+            const studentStore = studentTransaction.objectStore('students');
+            await new Promise(resolve => {
+                studentStore.clear().onsuccess = resolve;
+            });
+
+            const photoTransaction = db.transaction(['photos'], 'readwrite');
+            const photoStore = photoTransaction.objectStore('photos');
+            await new Promise(resolve => {
+                photoStore.clear().onsuccess = resolve;
+            });
+
+            progressFill.style.width = '50%';
+            progressText.textContent = `Importando ${backupData.students.length} estudiantes...`;
+
+            for (let i = 0; i < backupData.students.length; i++) {
+                await saveStudentToIndexedDB(backupData.students[i]);
+                
+                if (i % 10 === 0) {
+                    progressFill.style.width = `${50 + (i / backupData.students.length * 25)}%`;
+                    progressText.textContent = `Importando estudiante ${i + 1}/${backupData.students.length}...`;
+                }
+            }
+
+            progressFill.style.width = '75%';
+            const totalPhotos = backupData.photos ? Object.keys(backupData.photos).length : 0;
+            progressText.textContent = `Importando ${totalPhotos} fotos...`;
+
+            if (backupData.photos) {
+                const photoKeys = Object.keys(backupData.photos);
+                
+                for (let i = 0; i < photoKeys.length; i++) {
+                    const studentId = photoKeys[i];
+                    const base64Photo = backupData.photos[studentId];
+                    
+                    const binary = atob(base64Photo);
+                    const arrayBuffer = new ArrayBuffer(binary.length);
+                    const uint8Array = new Uint8Array(arrayBuffer);
+                    for (let j = 0; j < binary.length; j++) {
+                        uint8Array[j] = binary.charCodeAt(j);
+                    }
+                    
+                    const photoTransaction = db.transaction(['photos'], 'readwrite');
+                    const photoStore = photoTransaction.objectStore('photos');
+                    await new Promise(resolve => {
+                        const request = photoStore.put({
+                            studentId: studentId,
+                            photoData: arrayBuffer,
+                            timestamp: new Date().toISOString()
+                        });
+                        request.onsuccess = resolve;
+                        request.onerror = () => resolve();
+                    });
+                    
+                    if (i % 10 === 0) {
+                        progressFill.style.width = `${75 + (i / photoKeys.length * 15)}%`;
+                        progressText.textContent = `Importando foto ${i + 1}/${photoKeys.length}...`;
+                    }
+                }
+            }
+
+            progressFill.style.width = '90%';
+            progressText.textContent = 'Actualizando interfaz...';
+
+            await loadStudents();
+
+            progressFill.style.width = '100%';
+            progressText.textContent = `✅ Importación completada: ${backupData.students.length} estudiantes, ${totalPhotos} fotos`;
+            
+            setTimeout(() => {
+                progress.style.display = 'none';
+            }, 3000);
+
+        } catch (error) {
+            console.error('Error importando backup:', error);
+            alert('Error al importar backup: ' + error.message);
+            $('backupProgress').style.display = 'none';
+        }
+    }
+
+    function clearAllData() {
+        if (confirm('¿ESTÁS SEGURO? Esto eliminará TODOS los estudiantes y fotos permanentemente.') &&
+            confirm('¿REALMENTE SEGURO? Esta acción no se puede deshacer.')) {
+            
+            const transaction = db.transaction(['students'], 'readwrite');
+            const studentStore = transaction.objectStore('students');
+            const clearRequest = studentStore.clear();
+            
+            clearRequest.onsuccess = async () => {
+                const photoTransaction = db.transaction(['photos'], 'readwrite');
+                const photoStore = photoTransaction.objectStore('photos');
+                photoStore.clear();
+                
+                students = [];
+                alert('Todos los datos han sido eliminados');
+                await loadStudents();
+            };
+        }
+    }
+
+    function showSystemInfo() {
+        const info = `
+Sistema de Gestión Estudiantil - CPL La Vega
+
+• Versión: 2.0 (IndexedDB)
+• Estudiantes registrados: ${students.length}
+• Almacenamiento: IndexedDB
+• Última actualización: ${new Date().toLocaleString()}
+
+Este sistema funciona completamente offline con IndexedDB.
+        `;
+        alert(info);
+    }
+
+    function saveFirebaseConfig() {
+        alert('Configuración de Firebase guardada (funcionalidad de demostración)');
+    }
+
+    function testFirebaseConnection() {
+        alert('Probando conexión a Firebase (funcionalidad de demostración)');
+    }
+
+    function syncToFirebase() {
+        alert('Sincronizando a Firebase (funcionalidad de demostración)');
+    }
+
+    function syncFromFirebase() {
+        alert('Sincronizando desde Firebase (funcionalidad de demostración)');
+    }
+
+    function exportReport() {
+        alert('Exportando reporte (funcionalidad de demostración)');
+    }
+
+    function generateSummary() {
+        alert(`Resumen del Sistema:\n\n• Total Estudiantes: ${students.length}\n\nLos datos se actualizan automáticamente.`);
+    }
+  </script>
+
+</body></html>
